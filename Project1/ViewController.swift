@@ -15,6 +15,9 @@ class ViewController: UITableViewController {
         title = "My Books"
         navigationItem.title = title
         navigationController?.navigationBar.prefersLargeTitles = true
+        //navigationItem.rightBarButtonItem = UIBarButtonItem(barButtonSystemItem: .action, target: self, action: #selector(recommendThisApp))
+        navigationItem.rightBarButtonItem = UIBarButtonItem(image: UIImage(systemName: "person.crop.circle.badge.plus"), style: .plain, target: self, action:  #selector(recommendThisApp))
+      
         let fm = FileManager.default
         let path = Bundle.main.resourcePath!
         let files = try! fm.contentsOfDirectory(atPath: path)
@@ -39,6 +42,13 @@ class ViewController: UITableViewController {
             detailViewController.selectedImage = ImageToLoad(name: imagesDatabase[indexPath.row], postionInArray: indexPath.row, arraySize: imagesDatabase.count)
             navigationController?.pushViewController(detailViewController, animated: true)
         }
+    }
+    
+    @objc func recommendThisApp(){
+        let activityViewController = UIActivityViewController(activityItems: ["I am using My Books App. I am sure that you will like it! Come on 😎"], applicationActivities: [])
+        activityViewController.popoverPresentationController?.barButtonItem = navigationItem.rightBarButtonItem
+        present(activityViewController, animated: true)
+        
     }
     
 }
